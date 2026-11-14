@@ -2133,7 +2133,7 @@ body.menu-abierto { overflow: hidden; }
   position: fixed;
   top: 0;
   right: 0;
-  width: calc(100% - 480px); /* 40px = espacio lateral a la izquierda */
+  width: calc(100% - 280px); /* 40px = espacio lateral a la izquierda */
   height: 100dvh;
   flex-direction: column;
   justify-content: center;
@@ -2277,7 +2277,7 @@ header .btn-contacto { display: none; }
   /* Header */
 
   #headerbar nav ul {
-  width: calc(100% - 280px);
+  width: calc(100% - 180px);
 }
   #headerbar {
     padding: 12px 40px;

@@ -1,3 +1,33 @@
+// HEADER AUTOHIDE DEFINITIVO
+let lastScrollTop = 0;
+const mainHeader = document.querySelector('header');
+const scrollThreshold = 40; // Sensibilidad para evitar saltos con roces leves
+
+window.addEventListener('scroll', function() {
+  let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+  // Si estás arriba del todo, muestra siempre el header limpio
+  if (currentScroll <= 0) {
+    mainHeader.classList.remove('autohide');
+    return;
+  }
+
+  // Detecta la dirección del scroll al superar el umbral establecido
+  if (Math.abs(currentScroll - lastScrollTop) > scrollThreshold) {
+    if (currentScroll > lastScrollTop) {
+      // BAJAS: Oculta el header deslizándolo hacia arriba y cierra el menú móvil si estuviera abierto
+      mainHeader.classList.add('autohide');
+      if (typeof closeMenu === 'function') {
+        closeMenu(); 
+      }
+    } else {
+      // SUBES: Muestra el header de nuevo
+      mainHeader.classList.remove('autohide');
+    }
+    lastScrollTop = currentScroll;
+  }
+});
+
 
 // MENU DESPLEGABLE MEJORADO
 var menuToggle = document.querySelector('.menu-toggle');

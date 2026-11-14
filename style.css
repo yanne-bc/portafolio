@@ -2112,53 +2112,126 @@ header {
 /* ── MENU HAMBURGUESA 992px── */
 @media (max-width: 992px) {
  /* Nav hamburguesa */
-  #headerbar nav ul {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    flex-direction: column;
-    align-items: stretch;
-    background: var(--guinda);
-  }
+   /* Nav hamburguesa */
+  header {
+  animation: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: rgba(8, 8, 8, 0.95);
+}
 
-  #headerbar nav ul li {
-    text-align: center;
-    padding: 12px 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
+.menu-toggle {
+  position: relative;
+  z-index: 1100; /* para que la X quede por encima del panel */
+}
 
-  #headerbar nav ul li:last-child {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
+body.menu-abierto { overflow: hidden; }
 
-  .nav-contacto-movil {
-    display: block;
-  }
+/* PANEL */
+#headerbar nav ul {
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: calc(100% - 480px); /* 40px = espacio lateral a la izquierda */
+  height: 100dvh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 100px;
+  background: var(--guinda);
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1), visibility 0s linear 0.5s;
+}
 
-  .nav-contacto-movil .btn-contacto {
-    display: block;
-    text-align: center;
-    background: none;
-    border: none;
-    border-radius: 0;
-    padding: 0;
-    color: rgba(255, 255, 255, 0.5);
-    letter-spacing: 1px;
-    font-weight: 400;
-    width: 100%;
-  }
+#headerbar nav ul.activo {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1), visibility 0s;
+}
+
+/* LINKS */
+#headerbar nav ul li {
+  width: 100%;
+  padding: 14px 0;
+  text-align: center;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+#headerbar nav ul li a {
+  font-size: 1.4em;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+/* aparecen uno tras otro al abrir */
+#headerbar nav ul.activo li { opacity: 1; transform: none; }
+#headerbar nav ul.activo li:nth-child(1) { transition-delay: 0.2s; }
+#headerbar nav ul.activo li:nth-child(2) { transition-delay: 0.27s; }
+#headerbar nav ul.activo li:nth-child(3) { transition-delay: 0.34s; }
+#headerbar nav ul.activo li:nth-child(4) { transition-delay: 0.41s; }
+#headerbar nav ul.activo li:nth-child(5) { transition-delay: 0.48s; }
+
+/* botón contáctame dentro del menú */
+.nav-contacto-movil { display: block; }
+
+.nav-contacto-movil .btn-contacto {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  gap: 0;
+  justify-self: auto;
+  line-height: inherit;
+  background: none;
+  border: none;
+  border-radius: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  justify-content: center;
+  text-align: center;
+  font-weight: 400;
+  letter-spacing: 2px;
+}
 
 header .btn-contacto { display: none; }
+.menu-toggle { display: flex; }
 
-  .menu-toggle {
-    display: flex;
-  }
+.nav-contacto-movil .btn-contacto:hover {
+  transform: none;
+}
 
-  .nav-list.activo {
-    display: flex;
-  }
+/* Velo negro de fondo (Overlay) */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Ajusta la opacidad a tu gusto */
+  backdrop-filter: blur(2px); /* Opcional: da un efecto elegante de desenfoque por detrás */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 98; /* Debe estar detrás del menú pero delante del contenido */
+}
+
+/* Cuando el overlay está activo */
+.menu-overlay.activo {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Asegúrate de que tu menú (.nav-list) tenga un z-index superior al overlay */
+.nav-list {
+  z-index: 99;
+  /* ... tus otros estilos de transición y posicionamiento ... */
+}
 
   /* Hero */
 
@@ -2202,6 +2275,10 @@ header .btn-contacto { display: none; }
 @media (max-width: 768px) {
 
   /* Header */
+
+  #headerbar nav ul {
+  width: calc(100% - 280px);
+}
   #headerbar {
     padding: 12px 40px;
   }
@@ -2575,6 +2652,11 @@ header .btn-contacto { display: none; }
 }
 /* ── TABLET (≤ 600px) ─────────────────────────────────────────── */
 @media (max-width: 600px) {
+  /*MENUS DESPLEGABLE*/
+    #headerbar nav ul {
+  width: calc(100% - 180px);
+}
+  #headerbar nav ul li a { font-size: 1.1em;}
 /* HERO*/
 #hero{ height: 64svh; }
 #hero-content {padding: 20px; gap: 10px;}
@@ -2600,6 +2682,8 @@ header .btn-contacto { display: none; }
 @media (max-width: 480px) {  
   #container{ background-color: #000;}
   #headerbar { padding: 10px 20px;}
+  #headerbar nav ul { width: calc(100% - 0px);}
+  #headerbar nav ul li a { font-size: 1.2em;}
   .icono-header { width: 54px; height: 54px;}
   /* HERO  */
   #hero { height: 90dvh; position: relative;}
@@ -2704,6 +2788,7 @@ header .btn-contacto { display: none; }
 .nav-list.activo {display: flex !important;}
 /* ── MÓVIL (≤ 360px) ──────────────────────────────────────────── */
 @media (max-width: 360px) {
+    #headerbar nav ul { width: calc(100% - 0px);}
   /* Hero */
   #hero-content {padding:0;}
   .hero-left {width: 210px;}

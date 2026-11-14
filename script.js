@@ -1,28 +1,58 @@
-// MENU DESPLEGABLE
+
+// MENU DESPLEGABLE MEJORADO
 var menuToggle = document.querySelector('.menu-toggle');
 var navList = document.querySelector('.nav-list');
 
-// Toggle al hacer clic en el botón del menú
-menuToggle.addEventListener('click', function() {
-  navList.classList.toggle('activo');
-  menuToggle.classList.toggle('abierto');
+// 1. Crear o seleccionar el overlay (velo negro) dinámicamente
+var overlay = document.querySelector('.menu-overlay');
+if (!overlay) {
+  overlay = document.createElement('div');
+  overlay.className = 'menu-overlay';
+  document.body.appendChild(overlay);
+}
+
+// Función para abrir/cerrar el menú
+function toggleMenu() {
+  var isActive = navList.classList.toggle('activo');
+  menuToggle.classList.toggle('abierto', isActive);
+  overlay.classList.toggle('activo', isActive);
+  
+  // Bloquear o desbloquear el scroll del body
+  document.body.style.overflow = isActive ? 'hidden' : '';
+
+  // Accesibilidad
+  menuToggle.setAttribute('aria-expanded', isActive);
+}
+
+// Función para cerrar el menú
+function closeMenu() {
+  navList.classList.remove('activo');
+  menuToggle.classList.remove('abierto');
+  overlay.classList.remove('activo');
+  document.body.style.overflow = '';
+  menuToggle.setAttribute('aria-expanded', 'false');
+}
+
+// Evento click en el botón hamburguesa
+menuToggle.addEventListener('click', toggleMenu);
+
+// Cierre al hacer clic en el velo negro
+overlay.addEventListener('click', closeMenu);
+
+// Cierre al hacer clic en un enlace del menú
+document.querySelectorAll('.nav-list a').forEach(function(link) {
+  link.addEventListener('click', closeMenu);
 });
 
-// Cierre al hacer clic fuera del menú o botón
-document.addEventListener('click', function(e) {
-  if (!navList.contains(e.target) && !menuToggle.contains(e.target)) {
-    navList.classList.remove('activo');
-    menuToggle.classList.remove('abierto');
+// Cierre al presionar la tecla ESC (¡Gran detalle de UX!)
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeMenu();
   }
 });
 
-// Cierre al hacer clic en un enlace 
-document.querySelectorAll('.nav-list a').forEach(function(link) {
-  link.addEventListener('click', function() {
-    navList.classList.remove('activo');
-    menuToggle.classList.remove('abierto'); 
-  });
-});
+
+
 
 // CARPETA DESKTOP
 var carpeta = document.querySelector(".carpeta-container");

@@ -2654,9 +2654,9 @@ header .btn-contacto { display: none; }
 @media (max-width: 600px) {
   /*MENUS DESPLEGABLE*/
     #headerbar nav ul {
-  width: calc(100% - 180px);
+  width: calc(100% - 0px);
 }
-  #headerbar nav ul li a { font-size: 1.1em;}
+  #headerbar nav ul li a { font-size: 1.3em;}
 /* HERO*/
 #hero{ height: 64svh; }
 #hero-content {padding: 20px; gap: 10px;}
